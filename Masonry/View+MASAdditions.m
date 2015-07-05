@@ -126,7 +126,11 @@
 #pragma mark - associated properties
 
 - (id)mas_key {
-    return objc_getAssociatedObject(self, @selector(mas_key));
+    id mas_key = objc_getAssociatedObject(self, @selector(mas_key));
+    if (!mas_key) {
+        mas_key = self.accessibilityLabel?:(self.accessibilityHint?:self.accessibilityValue);
+    }
+    return mas_key;
 }
 
 - (void)setMas_key:(id)key {
